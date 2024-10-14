@@ -1,4 +1,4 @@
-package helloworld;
+package com.appsdeveloperblog.aws.photoapp.users;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,6 +25,7 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
 
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
+
         try {
             final String pageContents = this.getPageContents("https://checkip.amazonaws.com");
             String output = String.format("{ \"message\": \"hello world\", \"location\": \"%s\" }", pageContents);
@@ -32,6 +33,7 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
             return response
                     .withStatusCode(200)
                     .withBody(output);
+
         } catch (IOException e) {
             return response
                     .withBody("{}")
