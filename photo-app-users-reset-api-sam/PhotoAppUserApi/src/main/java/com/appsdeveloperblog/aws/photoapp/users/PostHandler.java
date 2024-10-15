@@ -1,6 +1,7 @@
 package com.appsdeveloperblog.aws.photoapp.users;
 
 import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
@@ -15,6 +16,10 @@ import static java.util.UUID.randomUUID;
 public class PostHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
+
+        LambdaLogger  logger = context.getLogger();
+        // HANDLING http post request for /users api endpoint
+        logger.log("Handling http post request for /users api endpoint");
 
         String requestBody = input.getBody();
 

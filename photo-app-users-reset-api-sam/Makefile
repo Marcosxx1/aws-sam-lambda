@@ -1,7 +1,7 @@
 # Makefile for AWS SAM project with targets for building, deploying, running, and debugging
 
 # Define all phony targets to avoid conflicts with files named the same
-.PHONY: run run-debug sam-deploy-guided sam-build
+.PHONY: run run-debug sam-deploy-guided sam-build sam-log sam-delete
 
 # Run the Lambda function locally using SAM with the specified event file
 run:
@@ -18,3 +18,12 @@ sam-build:
 # Deploy the SAM application interactively (prompts for parameters)
 sam-deploy-guided:
 	sam deploy --guided
+
+# View the logs of the deployed Lambda function by stack name
+sam-log:
+	sam logs --name PostHandlerLambdaFunction --stack-name PhotoAppUsersRestAPI
+
+# Delete the SAM application stack (removes all AWS resources created)
+sam-delete:
+	sam delete --stack-name PhotoAppUsersRestAPI
+DataTransformationExample
