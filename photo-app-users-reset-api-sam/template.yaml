@@ -29,32 +29,18 @@ Resources:
         PhotoAppUsers:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /hello
-            Method: get
-
-  ApplicationResourceGroup:
-    Type: AWS::ResourceGroups::Group
-    Properties:
-      Name:
-        Fn::Sub: ApplicationInsights-SAM-${AWS::StackName}
-      ResourceQuery:
-        Type: CLOUDFORMATION_STACK_1_0
-  ApplicationInsightsMonitoring:
-    Type: AWS::ApplicationInsights::Application
-    Properties:
-      ResourceGroupName:
-        Ref: ApplicationResourceGroup
-      AutoConfigurationEnabled: 'true'
+            Path: /users
+            Method: post
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   PhotoAppUsersApi:
     Description: "an API endpoint to create a new user"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/" # !Sub is a intrinsic function that substitutes variables in a string at deployment time
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/users" # !Sub is a intrinsic function that substitutes variables in a string at deployment time
   PostHandlerLambdaFunction:
     Description: "PostHandlerLambdaFunction ARN"
     Value: !GetAtt PostHandlerLambdaFunction.Arn
   PostHandlerLambdaFunctionIamRole:
     Description: "Implicit IAM Role created for PostHandlerLambdaFunction"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+    Value: !GetAtt PostHandlerLambdaFunction.Arn
