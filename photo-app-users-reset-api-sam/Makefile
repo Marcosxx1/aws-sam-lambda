@@ -26,4 +26,3 @@ sam-log:
 # Delete the SAM application stack (removes all AWS resources created)
 sam-delete:
 	sam delete --stack-name PhotoAppUsersRestAPI
-DataTransformationExample
