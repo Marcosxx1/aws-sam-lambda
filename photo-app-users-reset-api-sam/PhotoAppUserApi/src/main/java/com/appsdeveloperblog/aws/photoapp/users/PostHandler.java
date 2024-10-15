@@ -20,7 +20,7 @@ public class PostHandler implements RequestHandler<APIGatewayProxyRequestEvent, 
 
         Gson gson = new Gson();
         Map<String, String> userDetails = gson.fromJson(requestBody, Map.class);
-        userDetails.put("id", randomUUID().toString());
+        userDetails.put("userId", randomUUID().toString());
 
         // Todo: Process user detais
 
