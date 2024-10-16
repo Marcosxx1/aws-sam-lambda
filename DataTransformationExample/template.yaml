@@ -15,11 +15,11 @@ Globals:
     MemorySize: 512
 
 Resources:
-  HelloWorldFunction:
+  PostHandlerFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: HelloWorldFunction
-      Handler: helloworld.App::handleRequest
+      CodeUri: DataTransformationExample
+      Handler: com.appsdeveloperblog.aws.datatransformation.lambda.PostHandler::handleRequest
       Events:
         PhotoAppUsers:
           Type: Api
@@ -27,29 +27,13 @@ Resources:
             Path: /users
             Method: post
 
-  ApplicationResourceGroup:
-    Type: AWS::ResourceGroups::Group
-    Properties:
-      Name:
-        Fn::Sub: ApplicationInsights-SAM-${AWS::StackName}
-      ResourceQuery:
-        Type: CLOUDFORMATION_STACK_1_0
-  ApplicationInsightsMonitoring:
-    Type: AWS::ApplicationInsights::Application
-    Properties:
-      ResourceGroupName:
-        Ref: ApplicationResourceGroup
-      AutoConfigurationEnabled: 'true'
 Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  HelloWorldApi:
-    Description: API Gateway endpoint URL for Prod stage for Hello World function
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  HelloWorldFunction:
-    Description: Hello World Lambda Function ARN
-    Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
-    Description: Implicit IAM Role created for Hello World function
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+  PhotoAppUsersApi:
+    Description: "An API endpoint to create a new User"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/users"
+  PostHandlerFunction:
+    Description: "PostHandlerFunction ARN value"
+    Value: !GetAtt PostHandlerFunction.Arn
+  PostHandlerFunctionIamRole:
+    Description: "Implicit IAM Role created for PostHandlerFunction"
+    Value: !GetAtt PostHandlerFunction.Arn
