@@ -4,6 +4,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,25 +22,16 @@ public class DivisionExampleFunction implements RequestHandler<APIGatewayProxyRe
 
         Map<String, String> queryStringParameters = input.getQueryStringParameters();
 
-        try {
-            int dividend = Integer.parseInt(queryStringParameters.get("dividend"));
-            int divisor = Integer.parseInt(queryStringParameters.get("divisor"));
-            int result = dividend / divisor;
+        int dividend = Integer.parseInt(queryStringParameters.get("dividend"));
+        int divisor = Integer.parseInt(queryStringParameters.get("divisor"));
 
-            response.withStatusCode(200).withBody(
-                    "{"
-                            + "\"dividend\":" + dividend + ","
-                            + "\"divisor\":" + divisor + ","
-                            + "\"result\":" + result +
-                            "}"
-            );
-        } catch(NumberFormatException | ArithmeticException ex) {
-            response.withStatusCode(500);
-            response.withBody("{\"error\":\""+ex.getMessage().replaceAll("\"","\\\\\"")+"\"}");
-            return response;
-        }
+        response.withStatusCode(200).withBody(
+                "{"
+                        + "\"dividend\": " + dividend + ","
+                        + "\"divisor\": " + divisor +
+                        "}"
+        );
         return response;
-
     }
 
 }
