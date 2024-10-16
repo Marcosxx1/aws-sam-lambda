@@ -37,9 +37,9 @@ Outputs:
   PhotoAppUsersApi:
     Description: "An API endpoint to create a new User"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/users"
-  PostHandlerLambdaFunction:
-    Description: "PostHandlerLambdaFunction ARN value"
-    Value: !GetAtt PostHandlerLambdaFunction.Arn
-  PostHandlerLambdaFunctionIamRole:
-    Description: "Implicit IAM Role created for PostHandlerLambdaFunction"
-    Value: !GetAtt PostHandlerLambdaFunctionRole.Arn
+  PostHandlerFunction:
+    Description: "PostHandlerFunction ARN value"
+    Value: !GetAtt PostHandlerFunction.Arn
+  PostHandlerFunctionIamRole:
+    Description: "Implicit IAM Role created for PostHandlerFunction"
+    Value: !GetAtt PostHandlerFunctionRole.Arn
