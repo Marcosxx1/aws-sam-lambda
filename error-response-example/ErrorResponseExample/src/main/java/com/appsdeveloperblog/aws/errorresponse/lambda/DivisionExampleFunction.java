@@ -31,13 +31,13 @@ public class DivisionExampleFunction implements RequestHandler<APIGatewayProxyRe
             response.withStatusCode(200).withBody(
                     "{"
                             + "\"dividend\": " + dividend + ","
-                            + "\"divisor\": " + divisor +
-                            "\"result\": " + result +
+                            + "\"divisor\": " + divisor + ","
+                            + "\"result\": " + result +
                             "}"
             );
         } catch (NumberFormatException | ArithmeticException e) {
             response.withStatusCode(500);
-            response.withBody("{ \"error\":" + e.getMessage() + "\" }");
+            response.withBody("{ \"error\":" + e.getMessage().replaceAll("\"", "\\\\\"") + "\"}");
         }
         return response;
     }
