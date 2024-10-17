@@ -3,7 +3,7 @@
 version = 0.1
 
 [default.global.parameters]
-stack_name = "photo-app-users-reset-api-sam"
+stack_name = "photo-divisionExampleFunction-users-reset-api-sam"
 
 [default.build.parameters]
 cached = true

@@ -5,11 +5,11 @@
 
 # Run the Lambda function locally using SAM with the specified event file
 run:
-	sam local invoke PostHandlerFunction --event events/event.json
+	sam local invoke DivisionExampleFunction --event events/event.json
 
 # Run the Lambda function locally with debugging enabled on port 5858
 run-debug:
-	sam local invoke PostHandlerFunction --event events/event.json -d 5858
+	sam local invoke DivisionExampleFunction --event events/event.json -d 5858
 
 # Build the SAM application (compiles code and prepares deployment artifacts)
 sam-build:
@@ -19,10 +19,14 @@ sam-build:
 sam-deploy-guided:
 	sam deploy --guided
 
+# Deploy the SAM application
+sam-deploy:
+	sam deploy
+
 # View the logs of the deployed Lambda function by stack name
 sam-log:
-	sam logs --name PostHandlerFunction --stack-name data-transformation-example
+	sam logs --name DivisionExampleFunction --stack-name error-response-example-non-proxy
 
 # Delete the SAM application stack (removes all AWS resources created)
 sam-delete:
-	sam delete --stack-name data-transformation-example
+	sam delete --stack-name error-response-example-non-proxy
