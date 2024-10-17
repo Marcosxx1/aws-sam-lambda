@@ -19,6 +19,10 @@ sam-build:
 sam-deploy-guided:
 	sam deploy --guided
 
+# Deploy the SAM application
+sam-deploy:
+	sam deploy
+
 # View the logs of the deployed Lambda function by stack name
 sam-log:
 	sam logs --name DivisionExampleFunction --stack-name error-response-example

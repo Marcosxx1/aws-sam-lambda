@@ -22,15 +22,23 @@ public class DivisionExampleFunction implements RequestHandler<APIGatewayProxyRe
 
         Map<String, String> queryStringParameters = input.getQueryStringParameters();
 
-        int dividend = Integer.parseInt(queryStringParameters.get("dividend"));
-        int divisor = Integer.parseInt(queryStringParameters.get("divisor"));
+        try {
 
-        response.withStatusCode(200).withBody(
-                "{"
-                        + "\"dividend\": " + dividend + ","
-                        + "\"divisor\": " + divisor +
-                        "}"
-        );
+            int dividend = Integer.parseInt(queryStringParameters.get("dividend"));
+            int divisor = Integer.parseInt(queryStringParameters.get("divisor"));
+            int result = dividend / divisor;
+
+            response.withStatusCode(200).withBody(
+                    "{"
+                            + "\"dividend\": " + dividend + ","
+                            + "\"divisor\": " + divisor +
+                            "\"result\": " + result +
+                            "}"
+            );
+        } catch (NumberFormatException | ArithmeticException e) {
+            response.withStatusCode(500);
+            response.withBody("{ \"error\":" + e.getMessage() + "\" }");
+        }
         return response;
     }
 
