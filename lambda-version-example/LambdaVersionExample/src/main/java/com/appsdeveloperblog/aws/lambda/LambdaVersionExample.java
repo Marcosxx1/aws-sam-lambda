@@ -18,6 +18,6 @@ public class LambdaVersionExample implements RequestHandler<APIGatewayProxyReque
     public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
 
         return new APIGatewayProxyResponseEvent()
-                .withBody("Code version '3" + context.getFunctionVersion());
+                .withBody("Code version '1'. Pre-production Deployment version: " + context.getFunctionVersion());
     }
 }
