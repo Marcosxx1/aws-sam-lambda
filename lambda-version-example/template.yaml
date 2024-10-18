@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  lambda-version-example
+
+  Sample SAM Template for lambda-version-example
+
+Globals:
+  Function:
+    Timeout: 20
+    Runtime: java11
+    Architectures:
+      - x86_64
+    MemorySize: 512
+
+Resources:
+  LambdaVersionExampleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: LambdaVersionExample
+      Handler: com.appsdeveloperblog.aws.lambda.LambdaVersionExample::handleRequest
+      Events:
+        FunctionVersion:
+          Type: Api
+          Properties:
+            Path: /version
+            Method: get
+
+Outputs:
+  LambdaVersionExampleFunctionApi:
+    Description: "API Gateway endpoint URL for Prod stage for Lambda Version Function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/version"
+  LambdaVersionExampleFunction:
+    Description: "Lambda Version Function ARN"
+    Value: !GetAtt LambdaVersionExampleFunction.Arn
+  LambdaVersionExampleFunctionIamRole:
+    Description: "Implicit IAM Role created for Lambda Version Function"
+    Value: !GetAtt LambdaVersionExampleFunctionRole.Arn
+
