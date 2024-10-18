@@ -1,6 +1,68 @@
-# Study Notes:
+# Study Notes
+
+## Table of Contents
+- [Publishing a New Lambda Version on AWS](#publishing-a-new-lambda-version-on-aws)
+- [Assigning the New Lambda Version to its Endpoint](#assigning-the-new-lambda-version-to-its-endpoint)
+- [Important Notes on Lambda Versions](#important-notes-on-lambda-versions)
+
+## Publishing a New Lambda Version on AWS
+First, we **build** and **deploy** our code, then go to the AWS Lambda console and select the Lambda function we just deployed:
+
+![Lambda Panel](image-examples/img_6.png)
+
+1. Select **Versions**:  
+   ![Versions Tab](image-examples/img_1.png)
+
+2. Choose **Publish new version**.
+    - Even though the Version Description is optional, a version number (e.g., `1`) is automatically assigned. You can add a description to help identify the version, but this is not the version number itself. AWS will create a snapshot of the current function and name it **version 1**.
+    - The ARN of the Lambda will be updated with `:1` (or the appropriate version number) added to the end:
+
+   ![Lambda ARN](image-examples/img_14.png)
+
+Now, when we go back to the **Versions** section of the Lambda function, we’ll see this:
+
+![Lambda Versions](image-examples/img_3.png)
+
+## Assigning the New Lambda Version to its Endpoint
+1. Go to the **API Gateway console** and select your API:
+
+   ![API Gateway](image-examples/img_7.png)
+
+2. Navigate to the HTTP method > **Integration Request** > **Edit**:  
+   ![Integration Request](image-examples/img_8.png)
+
+3. Edit the function name or alias by adding the correct version (e.g., `:1`) to the Lambda function name:
+
+   ![Function Alias](image-examples/img_13.png)
+
+    - **Note**: Instead of hardcoding the version number (e.g., `:1`), it’s often better to create an alias (like `:prod` or `:dev`). This allows you to manage versions more easily in the future.
+
+4. Finally, test the changes:
+
+   ![Test Lambda](image-examples/img_15.png)
+
+## Important Notes on Lambda Versions
+- **Version Immutability**:  
+  Once we publish a version of a Lambda function, **we cannot modify the code** for that version. This ensures stability for any service or API using that specific version.
+
+- **Creating New Versions**:  
+  If we need to update the code, we can publish a new version (e.g., `version 2`), and then assign the new version to the API Gateway or other services. You do not need to recreate the function from scratch.
+
+- **Using Aliases**:  
+  Instead of directly assigning specific version numbers (like `:1`), consider using **aliases** (e.g., `:prod`, `:dev`). This way, we can update the alias to point to a new version without changing the API Gateway configuration every time.
+
+- If we need to use another version of this Lambda, we can repeat the steps under [Assigning the New Lambda Version to its Endpoint](#assigning-the-new-lambda-version-to-its-endpoint).
 
 
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 # lambda-version-example
 
 This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.
