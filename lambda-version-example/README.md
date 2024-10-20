@@ -4,6 +4,8 @@
 - [Publishing a New Lambda Version on AWS](#publishing-a-new-lambda-version-on-aws)
 - [Assigning the New Lambda Version to its Endpoint](#assigning-the-new-lambda-version-to-its-endpoint)
 - [Important Notes on Lambda Versions](#important-notes-on-lambda-versions)
+- [Lambda Aliases](#lambda-aliases)
+- [Canary Release](#canary-release)
 
 ## Publishing a New Lambda Version on AWS
 First, we **build** and **deploy** our code, then go to the AWS Lambda console and select the Lambda function we just deployed:
@@ -52,6 +54,74 @@ Now, when we go back to the **Versions** section of the Lambda function, we’ll
   Instead of directly assigning specific version numbers (like `:1`), consider using **aliases** (e.g., `:prod`, `:dev`). This way, we can update the alias to point to a new version without changing the API Gateway configuration every time.
 
 - If we need to use another version of this Lambda, we can repeat the steps under [Assigning the New Lambda Version to its Endpoint](#assigning-the-new-lambda-version-to-its-endpoint).
+
+
+## Lambda Aliases
+
+A Lambda Alias acts as a pointer to a specific version of a Lambda function. When a new version of the function is available, the alias can be updated to point to that new version without changing the function's original name or its configuration.
+
+Additionally, Lambda aliases can be configured to split traffic between different versions. For example, you can direct a percentage of traffic to one version of the function and the remaining percentage to another version. This is useful for gradual rollouts and canary deployments.
+
+### Go to>
+AWS Lambda console "Create Alias" or "Alias" in menu:
+ ![img_1.png](image-examples/img___1.png)
+
+Create it:
+![img_2.png](image-examples/img___2.png)
+
+Not it will be created with an arn finishing with :pro
+![img_3.png](image-examples/img___3.png)
+
+When we go back to the current implementation of the lambda we'll see this:
+![img_4.png](image-examples/img___4.png)
+
+### Now we can configure api gateway to use the aliases
+
+Go to the resource's integration request:
+![img_5.png](image-examples/img___5.png)
+
+
+Now simply add **:alias** < being the alias we created in my case **:prod**
+![img_6.png](image-examples/img___6.png)
+
+<h3>**Now Resources > deploy API**
+
+
+# Canary Release
+
+**Canary Release** is a deployment technique that allows gradually releasing a new software version to a small percentage of users to minimize risk. It ensures smooth rollouts by first testing on a limited audience before fully deploying.
+
+## Key Concepts:
+1. **Small Test Group (Canary)**: Route a small portion (e.g., 5-10%) of production traffic to the new version.
+2. **Monitoring**: Track performance metrics, error rates, and user feedback.
+3. **Rollout Control**: Incrementally increase the user base if stable, or roll back if issues arise.
+4. **Incremental Rollout**: Gradually increase traffic to the new version until it serves all users.
+
+## Example:
+1. Deploy version 1.1 to 10% of users.
+2. Monitor for issues (load times, errors).
+3. Increase to 25%, 50%, etc., if stable.
+4. Roll back if problems are found.
+
+
+### Create a Canary Release for AWS Lambda
+1. Go to API Gateway console
+2. Select the HTTP method
+3. Select **Integration request**
+4. Click on **Edit** button
+![img.png](image-examples/imgx_23.png)
+   5.  Here we can select the function(or service) that will be used, then we deploy![img.png](image-examples/imgx.png)
+   6.  With the service defined, we **should** deploy to apply the changes
+5. Go to AWS API Gateway console
+   6. ![img_3.png](image-examples/imgx_3.png)
+6. Now we'll create the Canary:
+![img_1.png](image-examples/imgx_1.png)
+6. Here we can select the load amount
+![img_2.png](image-examples/imgx_2.png)
+
+
+
+
 
 
 
