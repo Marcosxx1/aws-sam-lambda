@@ -1,3 +1,19 @@
+# Study Notes
+# Lambda Environment Variables
+When creting a new sam project `sam init` our `template.yml` will be generated with placeholder environments variables
+![img.png](example-images/img.png)
+
+We can create or use already existig ones:
+![img_1.png](example-images/img_1.png)
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 # environment-variables-example
 
 This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.
