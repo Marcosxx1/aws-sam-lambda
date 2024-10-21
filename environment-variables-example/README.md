@@ -7,6 +7,88 @@ We can create or use already existig ones:
 ![img_1.png](example-images/img_1.png)
 
 
+We can add or edit existing environment variables here:
+![img_1.png](img_1x.png)
+
+and eddit them
+![img.png](imgx.png)
+
+Is is worth noting that secrets/keys/environment variables
+are encripted at rest but not in transit
+
+We can change this by creating a new key in KMS:
+![img_2.png](img_2.png)
+
+Create a new key:
+![img_3.png](img_3.png)
+
+Create alias:
+![img_4.png](img_4.png)
+
+Select the IAM users:
+![img_5.png](img_5.png)
+
+Now select the user and the service, for example
+This is my lambda:
+![img_6.png](img_6.png)
+
+I then would use like this:
+![img_7.png](img_7.png)
+
+After reviewing the information:
+![img_8.png](img_8.png)
+
+And our key will be available:
+![img_9.png](img_9.png)
+
+Now we can encrypt our environment variables in transit
+![img_10.png](img_10.png)
+
+Then we can select which value to encrypt
+![img_11.png](img_11.png)
+
+![img_12.png](img_12.png)
+
+And now our environment variables will be encrypted like this:
+![img_13.png](img_13.png)
+And we'll be able to use it on our application
+
+![img_14.png](img_14.png)
+
+To decrypt we will use this code in our class:
+
+```java
+    private static String DECRYPTED_KEY = decryptKey();
+
+    private static String decryptKey() {
+        System.out.println("Decrypting key");
+        byte[] encryptedKey = Base64.decode(System.getenv("MY_COGNITO_CLIENT_APP_SECRET"));
+        Map<String, String> encryptionContext = new HashMap<>();
+        encryptionContext.put("LambdaFunctionName",
+                System.getenv("AWS_LAMBDA_FUNCTION_NAME"));
+
+        AWSKMS client = AWSKMSClientBuilder.defaultClient();
+
+        DecryptRequest request = new DecryptRequest()
+                .withCiphertextBlob(ByteBuffer.wrap(encryptedKey))
+                .withEncryptionContext(encryptionContext);
+
+        ByteBuffer plainTextKey = client.decrypt(request).getPlaintext();
+        return new String(plainTextKey.array(), Charset.forName("UTF-8"));
+    }
+```
+
+and this dependency:
+```xml
+<dependency>
+    <groupId>com.amazonaws</groupId>
+    <artifactId>aws-java-sdk-kms</artifactId>
+    <version>1.12.529</version>
+</dependency>
+
+```
+
+
 <br>
 <br>
 <br>
