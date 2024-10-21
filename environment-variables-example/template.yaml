@@ -34,11 +34,11 @@ Resources:
             Method: get
 Outputs:
   EnvironmentVariablesExampleApi:
-    Description: API Gateway endpoint URL for Prod stage for EnvironmentVariablesExample function
+    Description: "API Gateway endpoint URL for Prod stage for EnvironmentVariablesExample function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
   EnvironmentVariablesExampleFunction:
-    Description: EnvironmentVariablesExample Lambda Function ARN
+    Description: "EnvironmentVariablesExample Lambda Function ARN"
     Value: !GetAtt EnvironmentVariablesExampleFunction.Arn
   EnvironmentVariablesExampleFunctionIamRole:
-    Description: Implicit IAM Role created for EnvironmentVariablesExample function
+    Description: "Implicit IAM Role created for EnvironmentVariablesExample function"
     Value: !GetAtt EnvironmentVariablesExampleFunctionRole.Arn
